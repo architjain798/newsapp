@@ -10,20 +10,6 @@ export default class News extends Component {
       maxPage: 1,
     };
   }
-  apiCall = () => {
-    fetch(
-      `https://newsapi.org/v2/top-headlines?apiKey=1edaf62ee96e415d8660ac6179516a7a&country=in&page=${this.state.page}`
-    )
-      .then((data) => data.json())
-      .then((data) => {
-        this.setState({
-          maxPage: Math.ceil(data.totalResults / data.article.length),
-          article: data.articles,
-        });
-        console.log(this.state.article + "-----" + this.state.maxPage);
-      })
-      .catch((e) => console.log(e));
-  };
   componentDidMount() {
     fetch(
       `https://newsapi.org/v2/top-headlines?apiKey=1edaf62ee96e415d8660ac6179516a7a&country=in&page=${this.state.page}`

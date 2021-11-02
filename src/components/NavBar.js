@@ -1,10 +1,19 @@
 import React, { Component } from "react";
 
 export default class NavBar extends Component {
+  handleTheme = () => {
+    if (this.props.theme === "light") {
+      this.props.themeChange("dark");
+    } else {
+      this.props.themeChange("light");
+    }
+  };
   render() {
     return (
       <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav
+          className={`navbar navbar-expand-lg navbar-${this.props.theme} bg-${this.props.theme}`}
+        >
           <div className="container-fluid">
             <a className="navbar-brand" href="/">
               NewsTak
@@ -40,6 +49,23 @@ export default class NavBar extends Component {
                   </a>
                 </li>
               </ul>
+              <div className="form-check form-switch">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="flexSwitchCheckDefault"
+                  onClick={this.handleTheme}
+                />
+                <label
+                  className={`form-check-label text-${
+                    this.props.theme === "light" ? "dark" : "light"
+                  }`}
+                  htmlFor="flexSwitchCheckDefault"
+                >
+                  {this.props.theme === "light" ? "Dark" : "Light"}
+                </label>
+              </div>
             </div>
           </div>
         </nav>
