@@ -6,21 +6,7 @@ export default class App extends Component {
   state = {
     theme: "light",
   };
-  styleTheme = () => {
-    if (this.state.theme === "light") {
-      return {
-        color: "white",
-        backgroundColor: "black",
-      };
-    } else {
-      return {
-        color: "black",
-        backgroundColor: "white",
-      };
-    }
-  };
   toChangeTheme = (currentTheme) => {
-    console.log("theme changed");
     this.setState({
       theme: currentTheme,
     });
@@ -29,7 +15,7 @@ export default class App extends Component {
     return (
       <div>
         <NavBar themeChange={this.toChangeTheme} theme={this.state.theme} />
-        <News theme={this.state.theme} />
+        <News theme={this.state.theme} pageSize={6} />
       </div>
     );
   }
