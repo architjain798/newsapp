@@ -2,7 +2,8 @@ import React, { Component } from "react";
 
 export default class NewsItem extends Component {
   render() {
-    let { title, description, imageUrl, url } = this.props;
+    let { title, description, imageUrl, url, author, date, sourceName } =
+      this.props;
     return (
       <>
         <div className="card my-2" style={{ width: "18rem" }}>
@@ -16,8 +17,24 @@ export default class NewsItem extends Component {
             alt="https://miro.medium.com/max/880/0*H3jZONKqRuAAeHnG.jpg"
           />
           <div className="card-body">
-            <h5 className="card-title">{title}</h5>
+            <h5 className="card-title">
+              {title}
+              <span
+                className="position-absolute top-0 translate-middle badge rounded-pill bg-danger"
+                style={{ left: "15%" }}
+              >
+                {sourceName}
+                <span className="visually-hidden">unread messages</span>
+              </span>
+            </h5>
+            <span className="badge badge-pill badge-success">Success</span>
             <p className="card-text">{description}</p>
+            <p className="card-text">
+              <small className="text-muted-left">
+                By {author ? author : "Unknown"} on{" "}
+                {new Date(date).toLocaleTimeString()}
+              </small>
+            </p>
             <a
               href={url}
               target="_blank"
