@@ -15,7 +15,12 @@ export default class App extends Component {
     return (
       <div>
         <NavBar themeChange={this.toChangeTheme} theme={this.state.theme} />
-        <News theme={this.state.theme} pageSize={6} />
+        <News
+          theme={this.state.theme}
+          pageSize={6}
+          country="in"
+          category="sports"
+        />
       </div>
     );
   }

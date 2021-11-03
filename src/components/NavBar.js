@@ -48,6 +48,42 @@ export default class NavBar extends Component {
                     About
                   </a>
                 </li>
+
+                <li className="nav-item">
+                  <a className="nav-link active" href="/">
+                    General
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link active" href="/">
+                    Entertainment
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link active" href="/">
+                    Health
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link active" href="/">
+                    Science
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link active" href="/">
+                    Sports
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link active" href="/">
+                    Technology
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link active" href="/">
+                    Business
+                  </a>
+                </li>
               </ul>
               <div className="form-check form-switch">
                 <input

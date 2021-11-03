@@ -1,8 +1,19 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import Loader from "./Loader";
 import NewsItem from "./NewsItem";
 
 export default class News extends Component {
+  static defaultProps = {
+    country: "in",
+    pageSize: 6,
+    category: "general",
+  };
+  static propTypes = {
+    country: PropTypes.string,
+    pageSize: PropTypes.number,
+    category: PropTypes.string,
+  };
   constructor() {
     super();
     this.state = {
@@ -14,7 +25,7 @@ export default class News extends Component {
   }
   componentDidMount() {
     fetch(
-      `https://newsapi.org/v2/top-headlines?apiKey=1edaf62ee96e415d8660ac6179516a7a&country=in&page=${this.state.page}&pageSize=${this.props.pageSize}`
+      `https://newsapi.org/v2/top-headlines?&category=${this.props.category}&apiKey=1edaf62ee96e415d8660ac6179516a7a&country=${this.props.country}&page=${this.state.page}&pageSize=${this.props.pageSize}`
     )
       .then((data) => {
         this.setState({
@@ -25,13 +36,13 @@ export default class News extends Component {
       .then((data) => {
         this.setState({
           article: data.articles,
+          loading: false,
         });
         return data;
       })
       .then((data) => {
         this.setState({
           maxPage: Math.ceil(data.totalResults / this.state.article.length),
-          loading: false,
         });
         console.log(this.state.article.length + "-----" + this.state.maxPage);
       })
@@ -41,9 +52,11 @@ export default class News extends Component {
   nextPage = () => {
     window.scrollTo(0, 0);
     fetch(
-      `https://newsapi.org/v2/top-headlines?apiKey=1edaf62ee96e415d8660ac6179516a7a&country=in&page=${
-        this.state.page + 1
-      }&pageSize=${this.props.pageSize}`
+      `https://newsapi.org/v2/top-headlines?&category=${
+        this.props.category
+      }&apiKey=1edaf62ee96e415d8660ac6179516a7a&country=${
+        this.props.country
+      }&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`
     )
       .then((data) => {
         this.setState({
@@ -65,9 +78,11 @@ export default class News extends Component {
     window.scrollTo(0, 0);
     if (this.state.page > 1) {
       fetch(
-        `https://newsapi.org/v2/top-headlines?apiKey=1edaf62ee96e415d8660ac6179516a7a&country=in&page=${
-          this.state.page - 1
-        }&pageSize=${this.props.pageSize}`
+        `https://newsapi.org/v2/top-headlines?&category=${
+          this.props.category
+        }&apiKey=1edaf62ee96e415d8660ac6179516a7a&country=${
+          this.props.country
+        }&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`
       )
         .then((data) => {
           this.setState({
@@ -92,8 +107,7 @@ export default class News extends Component {
         <h2>NewTak Top News!!!</h2>
         {this.state.loading && <Loader />}
         <div className="row">
-          {!this.state.loading &&
-            this.state.article != null &&
+          {this.state.article != null &&
             this.state.article.map((element, index) => {
               return (
                 <>
