@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class NavBar extends Component {
   handleTheme = () => {
@@ -15,9 +16,9 @@ export default class NavBar extends Component {
           className={`navbar navbar-expand-lg navbar-${this.props.theme} bg-${this.props.theme}`}
         >
           <div className="container-fluid">
-            <a className="navbar-brand" href="/">
+            <Link className="navbar-brand" to="/">
               NewsTak
-            </a>
+            </Link>
             <button
               className="navbar-toggler"
               type="button"
@@ -35,54 +36,44 @@ export default class NavBar extends Component {
             >
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
-                  <a
-                    className="nav-link active"
-                    aria-current="page"
-                    href="/home"
-                  >
+                  <Link className="nav-link active" aria-current="page" to="/">
                     Home
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link active" href="/">
-                    About
-                  </a>
-                </li>
-
-                <li className="nav-item">
-                  <a className="nav-link active" href="/">
+                  <Link className="nav-link active" to="/general">
                     General
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link active" href="/">
+                  <Link className="nav-link active" to="/entertainment">
                     Entertainment
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link active" href="/">
+                  <Link className="nav-link active" to="/health">
                     Health
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link active" href="/">
+                  <Link className="nav-link active" to="/science">
                     Science
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link active" href="/">
+                  <Link className="nav-link active" to="/sports">
                     Sports
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link active" href="/">
+                  <Link className="nav-link active" to="/technology">
                     Technology
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link active" href="/">
+                  <Link className="nav-link active" to="/business">
                     Business
-                  </a>
+                  </Link>
                 </li>
               </ul>
               <div className="form-check form-switch">
