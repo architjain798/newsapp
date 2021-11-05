@@ -10,6 +10,11 @@ export default class App extends Component {
     searchText: "",
   };
   toChangeTheme = (currentTheme) => {
+    if (currentTheme === "light") {
+      document.body.style.backgroundColor = "white";
+    } else {
+      document.body.style.backgroundColor = "black";
+    }
     this.setState({
       theme: currentTheme,
     });
