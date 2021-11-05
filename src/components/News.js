@@ -108,24 +108,29 @@ export default class News extends Component {
         {this.state.loading && <Loader />}
         <div className="row">
           {this.state.article != null &&
-            this.state.article.map((element, index) => {
-              return (
-                <>
-                  <div className="col-md-4">
-                    <NewsItem
-                      title={element.title}
-                      description={element.description}
-                      imageUrl={element.urlToImage}
-                      url={element.url}
-                      author={element.author}
-                      date={element.publishedAt}
-                      sourceName={element.source.name}
-                      key={index}
-                    />
-                  </div>
-                </>
-              );
-            })}
+            this.state.article
+              .filter((element) => {
+                if (element.title.toLowerCase().includes(this.props.searchItem))
+                  return element;
+              })
+              .map((element, index) => {
+                return (
+                  <>
+                    <div className="col-md-4">
+                      <NewsItem
+                        title={element.title}
+                        description={element.description}
+                        imageUrl={element.urlToImage}
+                        url={element.url}
+                        author={element.author}
+                        date={element.publishedAt}
+                        sourceName={element.source.name}
+                        key={index}
+                      />
+                    </div>
+                  </>
+                );
+              })}
         </div>
         <div className="container d-flex justify-content-between">
           <button

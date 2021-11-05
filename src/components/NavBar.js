@@ -2,12 +2,20 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 export default class NavBar extends Component {
+  state = {
+    searchBox: "",
+  };
   handleTheme = () => {
     if (this.props.theme === "light") {
       this.props.themeChange("dark");
     } else {
       this.props.themeChange("light");
     }
+  };
+  onInputChange = (e) => {
+    this.setState({
+      searchBox: e.target.value,
+    });
   };
   render() {
     return (
@@ -93,6 +101,23 @@ export default class NavBar extends Component {
                   {this.props.theme === "light" ? "Dark" : "Light"}
                 </label>
               </div>
+              <form className="d-flex mx-2">
+                <input
+                  className="form-control me-2"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                  value={this.searchBox}
+                  onChange={this.onInputChange}
+                />
+                <button
+                  className="btn btn-outline-success"
+                  onClick={() => this.props.searchItem(this.state.searchBox)}
+                  type="button"
+                >
+                  Search
+                </button>
+              </form>
             </div>
           </div>
         </nav>

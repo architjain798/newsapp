@@ -7,17 +7,28 @@ import News from "./components/News";
 export default class App extends Component {
   state = {
     theme: "light",
+    searchText: "",
   };
   toChangeTheme = (currentTheme) => {
     this.setState({
       theme: currentTheme,
     });
   };
+  searchItem = (inputText) => {
+    console.log(inputText);
+    this.setState({
+      searchText: inputText,
+    });
+  };
   render() {
     return (
       <div>
         <Router>
-          <NavBar themeChange={this.toChangeTheme} theme={this.state.theme} />
+          <NavBar
+            themeChange={this.toChangeTheme}
+            theme={this.state.theme}
+            searchItem={this.searchItem}
+          />
           <Switch>
             <Route path="/business">
               <News
@@ -26,6 +37,7 @@ export default class App extends Component {
                 pageSize={6}
                 country="in"
                 category="business"
+                searchItem={this.state.searchText}
               />
             </Route>
             <Route path="/sports">
@@ -35,6 +47,7 @@ export default class App extends Component {
                 pageSize={6}
                 country="in"
                 category="sports"
+                searchItem={this.state.searchText}
               />
             </Route>
             <Route path="/entertainment">
@@ -44,6 +57,7 @@ export default class App extends Component {
                 pageSize={6}
                 country="in"
                 category="entertainment"
+                searchItem={this.state.searchText}
               />
             </Route>
             <Route path="/health">
@@ -53,6 +67,7 @@ export default class App extends Component {
                 pageSize={6}
                 country="in"
                 category="health"
+                searchItem={this.state.searchText}
               />
             </Route>
             <Route path="/science">
@@ -62,6 +77,7 @@ export default class App extends Component {
                 pageSize={6}
                 country="in"
                 category="science"
+                searchItem={this.state.searchText}
               />
             </Route>
             <Route path="/technology">
@@ -71,6 +87,7 @@ export default class App extends Component {
                 pageSize={6}
                 country="in"
                 category="technology"
+                searchItem={this.state.searchText}
               />
             </Route>
             <Route path="/">
@@ -80,6 +97,7 @@ export default class App extends Component {
                 pageSize={6}
                 country="in"
                 category="general"
+                searchItem={this.state.searchText}
               />
             </Route>
           </Switch>
