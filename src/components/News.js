@@ -14,14 +14,17 @@ export default class News extends Component {
     pageSize: PropTypes.number,
     category: PropTypes.string,
   };
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       article: [],
       page: 1,
       maxPage: 1,
       loading: false,
     };
+    document.title = `${
+      this.props.category.charAt(0).toUpperCase() + this.props.category.slice(1)
+    }-NewsTak`;
   }
   componentDidMount() {
     fetch(
@@ -100,11 +103,32 @@ export default class News extends Component {
         .catch((e) => console.log(e));
     }
   };
-
+  darkLight = (color) => {
+    if (color === "dark") {
+      return {
+        backgroundColor: "black",
+        color: "white",
+      };
+    } else {
+      return {
+        backgroundColor: "white",
+        color: "black",
+      };
+    }
+  };
   render() {
     return (
-      <div className="container my-3 text-center">
-        <h2>NewTak Top News!!!</h2>
+      <div
+        className="container my-3 text-center"
+        style={this.darkLight(this.props.theme)}
+      >
+        <h2>
+          {`NewTak Top News from ${
+            this.props.category.charAt(0).toUpperCase() +
+            this.props.category.slice(1)
+          } `}{" "}
+          !!!
+        </h2>
         {this.state.loading && <Loader />}
         <div className="row">
           {this.state.article != null &&
@@ -126,6 +150,7 @@ export default class News extends Component {
                         date={element.publishedAt}
                         sourceName={element.source.name}
                         key={index}
+                        theme={this.props.theme}
                       />
                     </div>
                   </>

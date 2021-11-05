@@ -1,12 +1,29 @@
 import React, { Component } from "react";
 
 export default class NewsItem extends Component {
+  darkLight = (color) => {
+    if (color === "dark") {
+      return {
+        backgroundColor: "#3e3e40",
+        color: "white",
+      };
+    } else {
+      return {
+        backgroundColor: "white",
+        color: "black",
+      };
+    }
+  };
   render() {
     let { title, description, imageUrl, url, author, date, sourceName } =
       this.props;
     return (
       <>
-        <div className="card my-2" style={{ width: "18rem" }}>
+        <div
+          className="card my-2"
+          style={{ width: "18rem" }}
+          style={this.darkLight(this.props.theme)}
+        >
           <img
             src={
               imageUrl === null
