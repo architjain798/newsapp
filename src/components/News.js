@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import PropTypes from "prop-types";
 import Loader from "./Loader";
 import NewsItem from "./NewsItem";
@@ -21,6 +22,7 @@ export default class News extends Component {
       page: 1,
       maxPage: 1,
       loading: false,
+      totalResults: "",
     };
     document.title = `${
       this.props.category.charAt(0).toUpperCase() + this.props.category.slice(1)
@@ -28,7 +30,7 @@ export default class News extends Component {
   }
   componentDidMount() {
     fetch(
-      `https://newsapi.org/v2/top-headlines?&category=${this.props.category}&apiKey=1edaf62ee96e415d8660ac6179516a7a&country=${this.props.country}&page=${this.state.page}&pageSize=${this.props.pageSize}`
+      `https://newsapi.org/v2/top-headlines?&category=${this.props.category}&apiKey=7a6cc76f520e4a9d9551dc2a1c3b9e82&country=${this.props.country}&page=${this.state.page}&pageSize=${this.props.pageSize}`
     )
       .then((data) => {
         this.setState({
@@ -39,6 +41,7 @@ export default class News extends Component {
       .then((data) => {
         this.setState({
           article: data.articles,
+          totalResults: data.totalResults,
           loading: false,
         });
         return data;
@@ -53,11 +56,11 @@ export default class News extends Component {
   }
 
   nextPage = () => {
-    window.scrollTo(0, 0);
+    //window.scrollTo(0, 0);
     fetch(
       `https://newsapi.org/v2/top-headlines?&category=${
         this.props.category
-      }&apiKey=1edaf62ee96e415d8660ac6179516a7a&country=${
+      }&apiKey=7a6cc76f520e4a9d9551dc2a1c3b9e82&country=${
         this.props.country
       }&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`
     )
@@ -69,7 +72,7 @@ export default class News extends Component {
       })
       .then((data) => {
         this.setState({
-          article: data.articles,
+          article: this.state.article.concat(data.articles),
           page: this.state.page + 1,
           loading: false,
         });
@@ -77,32 +80,6 @@ export default class News extends Component {
       .catch((e) => console.log(e));
   };
 
-  prevPage = () => {
-    window.scrollTo(0, 0);
-    if (this.state.page > 1) {
-      fetch(
-        `https://newsapi.org/v2/top-headlines?&category=${
-          this.props.category
-        }&apiKey=1edaf62ee96e415d8660ac6179516a7a&country=${
-          this.props.country
-        }&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`
-      )
-        .then((data) => {
-          this.setState({
-            loading: true,
-          });
-          return data.json();
-        })
-        .then((data) => {
-          this.setState({
-            article: data.articles,
-            page: this.state.page - 1,
-            loading: false,
-          });
-        })
-        .catch((e) => console.log(e));
-    }
-  };
   darkLight = (color) => {
     if (color === "dark") {
       return {
@@ -115,6 +92,9 @@ export default class News extends Component {
         color: "black",
       };
     }
+  };
+  fetchMoreData = async () => {
+    this.nextPage();
   };
   render() {
     return (
@@ -130,51 +110,43 @@ export default class News extends Component {
           !!!
         </h2>
         {this.state.loading && <Loader />}
-        <div className="row">
-          {this.state.article != null &&
-            this.state.article
-              .filter((element) => {
-                if (element.title.toLowerCase().includes(this.props.searchItem))
-                  return element;
-              })
-              .map((element, index) => {
-                return (
-                  <>
-                    <div className="col-md-4">
-                      <NewsItem
-                        title={element.title}
-                        description={element.description}
-                        imageUrl={element.urlToImage}
-                        url={element.url}
-                        author={element.author}
-                        date={element.publishedAt}
-                        sourceName={element.source.name}
-                        key={index}
-                        theme={this.props.theme}
-                      />
-                    </div>
-                  </>
-                );
-              })}
-        </div>
-        <div className="container d-flex justify-content-between">
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={this.prevPage}
-            disabled={this.state.page <= 1}
-          >
-            &larr; Previous
-          </button>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={this.nextPage}
-            disabled={this.state.page >= this.state.maxPage}
-          >
-            Next &rarr;
-          </button>
-        </div>
+        <InfiniteScroll
+          dataLength={this.state.article.length}
+          next={this.fetchMoreData}
+          hasMore={this.state.page !== this.state.maxPage}
+          loader={<Loader theme={this.props.theme} />}
+        >
+          <div className="row">
+            {this.state.article != null &&
+              this.state.article
+                .filter((element) => {
+                  if (
+                    element.title.toLowerCase().includes(this.props.searchItem)
+                  )
+                    return element;
+                  return false;
+                })
+                .map((element, index) => {
+                  return (
+                    <>
+                      <div className="col-md-4">
+                        <NewsItem
+                          title={element.title}
+                          description={element.description}
+                          imageUrl={element.urlToImage}
+                          url={element.url}
+                          author={element.author}
+                          date={element.publishedAt}
+                          sourceName={element.source.name}
+                          key={index}
+                          theme={this.props.theme}
+                        />
+                      </div>
+                    </>
+                  );
+                })}
+          </div>
+        </InfiniteScroll>
       </div>
     );
   }

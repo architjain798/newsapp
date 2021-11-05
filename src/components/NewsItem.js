@@ -6,11 +6,13 @@ export default class NewsItem extends Component {
       return {
         backgroundColor: "#3e3e40",
         color: "white",
+        width: "18rem",
       };
     } else {
       return {
         backgroundColor: "white",
         color: "black",
+        width: "18rem",
       };
     }
   };
@@ -19,11 +21,7 @@ export default class NewsItem extends Component {
       this.props;
     return (
       <>
-        <div
-          className="card my-2"
-          style={{ width: "18rem" }}
-          style={this.darkLight(this.props.theme)}
-        >
+        <div className="card my-2" style={this.darkLight(this.props.theme)}>
           <img
             src={
               imageUrl === null
