@@ -11,6 +11,8 @@ export default class App extends Component {
     searchText: "",
     progress: "",
   };
+  //APIKey = process.env.REACT_APP_API_KEY;
+  APIKey = "7a6cc76f520e4a9d9551dc2a1c3b9e82";
   toChangeTheme = (currentTheme) => {
     if (currentTheme === "light") {
       document.body.style.backgroundColor = "white";
@@ -21,17 +23,20 @@ export default class App extends Component {
       theme: currentTheme,
     });
   };
+
   searchItem = (inputText) => {
     console.log(inputText);
     this.setState({
       searchText: inputText,
     });
   };
+
   setProgress = (progressValue) => {
     this.setState({
       progress: progressValue,
     });
   };
+
   render() {
     return (
       <div>
@@ -49,6 +54,7 @@ export default class App extends Component {
           <Switch>
             <Route path="/business">
               <News
+                APIKey={this.APIKey}
                 setProgress={this.setProgress}
                 key="business"
                 theme={this.state.theme}
@@ -60,6 +66,7 @@ export default class App extends Component {
             </Route>
             <Route path="/sports">
               <News
+                APIKey={this.APIKey}
                 setProgress={this.setProgress}
                 key="sports"
                 theme={this.state.theme}
@@ -71,6 +78,7 @@ export default class App extends Component {
             </Route>
             <Route path="/entertainment">
               <News
+                APIKey={this.APIKey}
                 setProgress={this.setProgress}
                 key="entertainment"
                 theme={this.state.theme}
@@ -82,6 +90,7 @@ export default class App extends Component {
             </Route>
             <Route path="/health">
               <News
+                APIKey={this.APIKey}
                 setProgress={this.setProgress}
                 key="health"
                 theme={this.state.theme}
@@ -93,6 +102,7 @@ export default class App extends Component {
             </Route>
             <Route path="/science">
               <News
+                APIKey={this.APIKey}
                 setProgress={this.setProgress}
                 key="science"
                 theme={this.state.theme}
@@ -104,6 +114,7 @@ export default class App extends Component {
             </Route>
             <Route path="/technology">
               <News
+                APIKey={this.APIKey}
                 setProgress={this.setProgress}
                 key="technology"
                 theme={this.state.theme}
@@ -115,6 +126,7 @@ export default class App extends Component {
             </Route>
             <Route path="/">
               <News
+                APIKey={this.APIKey}
                 setProgress={this.setProgress}
                 key="technology"
                 theme={this.state.theme}

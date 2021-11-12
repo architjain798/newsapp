@@ -31,7 +31,7 @@ export default class News extends Component {
   componentDidMount() {
     this.props.setProgress(5);
     fetch(
-      `https://newsapi.org/v2/top-headlines?&category=${this.props.category}&apiKey=7a6cc76f520e4a9d9551dc2a1c3b9e82&country=${this.props.country}&page=${this.state.page}&pageSize=${this.props.pageSize}`
+      `https://newsapi.org/v2/top-headlines?&category=${this.props.category}&apiKey=${this.props.APIKey}&country=${this.props.country}&page=${this.state.page}&pageSize=${this.props.pageSize}`
     )
       .then((data) => {
         this.setState({
@@ -64,9 +64,9 @@ export default class News extends Component {
     fetch(
       `https://newsapi.org/v2/top-headlines?&category=${
         this.props.category
-      }&apiKey=7a6cc76f520e4a9d9551dc2a1c3b9e82&country=${
-        this.props.country
-      }&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`
+      }&apiKey=${this.props.APIKey}&country=${this.props.country}&page=${
+        this.state.page + 1
+      }&pageSize=${this.props.pageSize}`
     )
       .then((data) => {
         this.setState({
