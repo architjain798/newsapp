@@ -29,6 +29,7 @@ export default class News extends Component {
     }-NewsTak`;
   }
   componentDidMount() {
+    this.props.setProgress(5);
     fetch(
       `https://newsapi.org/v2/top-headlines?&category=${this.props.category}&apiKey=7a6cc76f520e4a9d9551dc2a1c3b9e82&country=${this.props.country}&page=${this.state.page}&pageSize=${this.props.pageSize}`
     )
@@ -39,16 +40,19 @@ export default class News extends Component {
         return data.json();
       })
       .then((data) => {
+        this.props.setProgress(50);
         this.setState({
           article: data.articles,
           totalResults: data.totalResults,
-          loading: false,
+          //
         });
         return data;
       })
       .then((data) => {
+        this.props.setProgress(100);
         this.setState({
           maxPage: Math.ceil(data.totalResults / this.state.article.length),
+          loading: false,
         });
         console.log(this.state.article.length + "-----" + this.state.maxPage);
       })
@@ -116,7 +120,7 @@ export default class News extends Component {
           hasMore={this.state.page !== this.state.maxPage}
           loader={<Loader theme={this.props.theme} />}
         >
-          <div className="row">
+          <div className="container row">
             {this.state.article != null &&
               this.state.article
                 .filter((element) => {
